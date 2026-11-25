@@ -83,11 +83,19 @@ h2{font:400 34px var(--titulo);letter-spacing:1.5px;display:inline-block;backgro
 .dados{display:grid;grid-template-columns:auto 1fr;gap:4px 18px}
 .dados dt{color:var(--azul-claro);font-weight:700;text-transform:uppercase}
 .dados dd{overflow-wrap:anywhere}
-.attr{display:grid;grid-template-columns:minmax(80px,140px) 1fr 40px;gap:12px;align-items:center;margin:7px 0}
-.trilho{height:16px;background:#2a2a36;transform:skew(-18deg)}
-.trilho i{display:block;height:100%;background:linear-gradient(90deg,var(--azul),var(--azul-claro))}
-.hab{border-left:8px solid var(--azul);padding-left:12px;margin:14px 0}
+.radar{display:block;width:100%;max-width:520px;margin:0 auto}
+.radar text{font-family:var(--titulo);paint-order:stroke;stroke:#000;stroke-linejoin:round}
+.over{display:flex;align-items:center;justify-content:center;gap:22px;background:var(--azul);border:4px solid var(--branco);padding:6px 18px;margin-top:22px;transform:rotate(1.5deg)}
+.over small{font:400 24px var(--titulo);letter-spacing:2px}
+.over b{font:400 56px/1.1 var(--titulo)}
+.over em{font:400 82px/1 var(--titulo);font-style:normal;-webkit-text-stroke:8px #000;paint-order:stroke fill}
+.escala{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:center;list-style:none;margin-top:12px}
+.escala b{color:var(--azul-claro)}
+.nota{display:inline-block;background:var(--branco);color:#000;padding:1px 8px;margin:6px 0 0 8px;font-weight:700}
+.hab{border-left:8px solid var(--azul);padding-left:12px;margin:18px 0}
 .hab b{font:400 22px var(--tag);color:var(--azul-claro)}
+.hab .n{display:inline-block;font:400 22px var(--titulo);color:var(--branco);background:var(--azul);padding:0 9px;margin-right:8px;transform:skew(-10deg)}
+.hab .variante{border-left:4px dashed var(--azul-claro);padding-left:12px;margin:12px 0 0 14px}
 .vazio{font:400 26px var(--tag);text-align:center;padding:50px 10px}
 article h2{font-size:38px}
 
@@ -101,9 +109,17 @@ textarea{resize:vertical}
 fieldset{border:3px dashed var(--azul);padding:12px;margin-bottom:18px}
 legend{font:400 24px var(--titulo);letter-spacing:1px;padding:0 8px}
 .linha{display:grid;gap:10px;margin-bottom:12px;align-items:start}
-.linha.at{grid-template-columns:1fr 90px auto}
-.linha.hb{grid-template-columns:1fr 2fr auto}
 .linha.ex{grid-template-columns:1fr 2fr auto}
+.seis{display:grid;grid-template-columns:repeat(3,1fr);gap:0 14px}
+#previa{font:400 28px var(--titulo);letter-spacing:1px;color:var(--azul-claro)}
+#g-habilidades{counter-reset:hab}
+.bloco{counter-increment:hab;counter-reset:var;border-left:6px solid var(--azul);padding-left:10px;margin-bottom:20px}
+.variantes .item{counter-increment:var;margin-left:18px;border-left:3px dashed var(--azul-claro);padding-left:10px}
+.item{display:grid;grid-template-columns:auto 1fr auto;gap:8px 10px;align-items:start;margin-bottom:10px}
+.item textarea{grid-column:1/-1}
+.item .n{font:400 26px/42px var(--titulo);min-width:34px}
+.bloco>.item>.n::before{content:counter(hab)}
+.variantes .n::before{content:counter(hab) "." counter(var)}
 .x{background:#000;color:var(--branco);border:3px solid var(--branco);width:42px;height:42px;font-weight:700}
 .acoes{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end;margin-top:10px}
 
@@ -115,7 +131,8 @@ footer p{flex:1 1 260px}
 body:not(.editor) :is([data-acao=capa],[data-acao=personagem],[data-acao=excluir],[data-acao=pagina],[data-acao=excluirPagina],footer){display:none!important}
 @media(max-width:720px){
   .ficha{grid-template-columns:1fr}
-  .duas,.linha.hb,.linha.ex{grid-template-columns:1fr}
+  .duas,.linha.ex{grid-template-columns:1fr}
+  .seis{grid-template-columns:1fr 1fr}
   .grade{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:26px 18px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -142,26 +159,113 @@ body:not(.editor) :is([data-acao=capa],[data-acao=personagem],[data-acao=excluir
  "titulo": "MINHA WIKI FC",
  "subtitulo": "Futebol de rua, regras próprias",
  "personagens": [
-  {"id":"p1","nome":"Zeca Trovão","apelido":"O Raio da Quadra","posicao":"Atacante","numero":"9","time":"Azulão da Vila","foto":"",
-   "descricao":"Personagem de exemplo. Clique em Editar para trocar tudo ou em Excluir para apagar.",
-   "atributos":[{"nome":"Velocidade","valor":92},{"nome":"Chute","valor":87},{"nome":"Drible","valor":80},{"nome":"Defesa","valor":35}],
-   "habilidades":[{"nome":"Chute Relâmpago","desc":"Finalização muito forte de fora da área."}],
-   "extras":[{"nome":"Idade","valor":"17"},{"nome":"Pé dominante","valor":"Direito"}]},
-  {"id":"p2","nome":"Bia Muralha","apelido":"Paredão","posicao":"Goleira","numero":"1","time":"Azulão da Vila","foto":"",
-   "descricao":"Outro exemplo. Lidera a defesa e quase nunca perde a calma.",
-   "atributos":[{"nome":"Reflexo","valor":95},{"nome":"Defesa","valor":90},{"nome":"Passe","valor":64}],
-   "habilidades":[{"nome":"Mãos de Concreto","desc":"Aumenta a chance de defender pênaltis."}],
-   "extras":[{"nome":"Idade","valor":"18"}]}
+  {
+   "id": "p1",
+   "nome": "Zeca Trovão",
+   "apelido": "O Raio da Quadra",
+   "posicao": "Atacante",
+   "numero": "9",
+   "foto": "",
+   "atributos": {
+    "velocidade": 92,
+    "defesa": 35,
+    "passe": 70,
+    "drible": 80,
+    "chute": 94,
+    "ataque": 91
+   },
+   "habilidades": [
+    {
+     "nome": "Chute Relâmpago",
+     "desc": "Finalização muito forte de fora da área.",
+     "variantes": [
+      {
+       "nome": "Relâmpago Curvo",
+       "desc": "O chute faz uma curva antes de entrar."
+      }
+     ]
+    }
+   ],
+   "extras": [
+    {
+     "nome": "Idade",
+     "valor": "17"
+    },
+    {
+     "nome": "Pé dominante",
+     "valor": "Direito"
+    }
+   ],
+   "subclasse": "Finalizador"
+  },
+  {
+   "id": "p2",
+   "nome": "Bia Muralha",
+   "apelido": "Paredão",
+   "posicao": "Goleira",
+   "numero": "1",
+   "foto": "",
+   "atributos": {
+    "velocidade": 68,
+    "defesa": 95,
+    "passe": 74,
+    "drible": 50,
+    "chute": 45,
+    "ataque": 30
+   },
+   "habilidades": [
+    {
+     "nome": "Mãos de Concreto",
+     "desc": "Aumenta a chance de defender pênaltis.",
+     "variantes": []
+    }
+   ],
+   "extras": [
+    {
+     "nome": "Idade",
+     "valor": "18"
+    }
+   ],
+   "subclasse": "Reflexo"
+  }
  ],
  "paginas": [
-  {"id":"i1","titulo":"Sobre o jogo","texto":"Escreva aqui a história, as regras, os times, os modos de jogo..."}
+  {
+   "id": "i1",
+   "titulo": "Sobre o jogo",
+   "texto": "Escreva aqui a história, as regras, os times, os modos de jogo..."
+  }
  ]
 }
 </script>
 
 <script>
 const $ = s => document.querySelector(s);
-const original = JSON.parse($('#dados-wiki').textContent);
+// Atributos fixos, na ordem do gráfico (sentido horário, a partir do topo)
+const ATRIBUTOS = [['velocidade','Velocidade'],['defesa','Defesa'],['passe','Passe'],['drible','Drible'],['chute','Chute'],['ataque','Ataque']];
+// Nota mínima de cada letra
+const NOTAS = [['S',90],['A',80],['B',70],['C',60],['D',50],['E',40],['F',30],['G',0]];
+const limitar = v => Math.max(0, Math.min(100, Math.round(Number(v)) || 0));
+const notaDe = v => NOTAS.find(n => v >= n[1])[0];
+// Over = média dos 6 atributos, arredondada
+const overDe = p => Math.round(ATRIBUTOS.reduce((t,[k]) => t + p.atributos[k], 0) / ATRIBUTOS.length);
+
+// Converte dados de versões anteriores para o formato atual
+function converter(d){
+  d.personagens.forEach(p => {
+    const antigos = p.atributos || {};
+    p.atributos = Object.fromEntries(ATRIBUTOS.map(([k,nome]) => {
+      const v = Array.isArray(antigos) ? antigos.find(a => a.nome.toLowerCase() === nome.toLowerCase())?.valor : antigos[k];
+      return [k, limitar(v ?? 50)];
+    }));
+    p.habilidades = (p.habilidades || []).map(h => ({...h, variantes: h.variantes || []}));
+    p.extras = p.extras || [];
+    p.subclasse = p.subclasse || '';
+    delete p.time; delete p.descricao;
+  });
+  return d;
+}
+const original = converter(JSON.parse($('#dados-wiki').textContent));
 const CHAVE = 'wiki-futebol-v1';
 const POSICOES = ['Goleiro','Goleira','Zagueiro','Zagueira','Lateral','Volante','Meio-campo','Ponta','Atacante','Técnico','Técnica'];
 
@@ -172,14 +276,13 @@ original.base = original.atualizado; // versão publicada em que o rascunho se b
 let dados = original;
 if (EDITOR) try {
   const salvo = JSON.parse(localStorage.getItem(CHAVE));
-  if (salvo && salvo.atualizado > original.atualizado) dados = salvo;
+  if (salvo && salvo.atualizado > original.atualizado) dados = converter(salvo);
 } catch (e) {}
 
 let tela = {aba:'personagens', id:null}, busca = '', filtro = '';
 
 const esc = t => String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const novoId = () => Date.now().toString(36) + Math.random().toString(36).slice(2,6);
-const limitar = v => Math.max(0, Math.min(100, Number(v) || 0));
 const fotoSegura = f => /^data:image\//.test(f || '') ? f : '';
 
 function salvar(){
@@ -212,7 +315,7 @@ function desenharLista(){
   const posicoes = [...new Set(dados.personagens.map(p => p.posicao).filter(Boolean))];
   if (!posicoes.includes(filtro)) filtro = '';
   $('#app').innerHTML = `<div class="barra">
-    <input id="busca" type="search" placeholder="Buscar nome, time ou habilidade..." aria-label="Buscar" value="${esc(busca)}">
+    <input id="busca" type="search" placeholder="Buscar nome, subclasse ou habilidade..." aria-label="Buscar" value="${esc(busca)}">
     <select id="filtro" aria-label="Posição"><option value="">Todas as posições</option>
       ${posicoes.map(x => `<option ${x===filtro?'selected':''}>${esc(x)}</option>`).join('')}</select>
     <button class="btn azul" data-acao="personagem">+ Novo personagem</button></div><div id="grade"></div>`;
@@ -222,10 +325,10 @@ function desenharLista(){
 function desenharGrade(){
   const q = busca.toLowerCase();
   const lista = dados.personagens.filter(p => (!filtro || p.posicao === filtro) &&
-    [p.nome,p.apelido,p.time,...p.habilidades.map(h => h.nome)].join(' ').toLowerCase().includes(q));
+    [p.nome,p.apelido,p.subclasse,...p.habilidades.flatMap(h => [h.nome, ...h.variantes.map(v => v.nome)])].join(' ').toLowerCase().includes(q));
   $('#grade').innerHTML = lista.length ? `<div class="grade">${lista.map(p =>
     `<button class="card" data-acao="ver" data-v="${esc(p.id)}">${retrato(p)}
-      <div class="legenda"><strong>${esc(p.nome)}</strong>${p.posicao ? `<span class="etiqueta">${esc(p.posicao)}</span>` : ''}</div></button>`).join('')}</div>`
+      <div class="legenda"><strong>${esc(p.nome)}</strong>${p.posicao ? `<span class="etiqueta">${esc(p.posicao)}</span>` : ''}<span class="nota">${overDe(p)} · ${notaDe(overDe(p))}</span></div></button>`).join('')}</div>`
     : '<p class="vazio">Nenhum personagem encontrado.</p>';
 }
 
@@ -233,21 +336,41 @@ function desenharGrade(){
 const recortar = nome => String(nome).split(/\s+/).map(w =>
   `<span class="palavra" aria-hidden="true">${[...w].map(l => `<span class="letra">${esc(l)}</span>`).join('')}</span>`).join('');
 
+function grafico(p){
+  const ponto = (i, r) => { const a = i * Math.PI / 3; return [260 + r * Math.sin(a), 260 - r * Math.cos(a)].map(n => n.toFixed(1)); };
+  const hex = r => ATRIBUTOS.map((_,i) => ponto(i, typeof r === 'function' ? r(i) : r).join(',')).join(' ');
+  const texto = (i, r, dy, t, tam, cor, borda) => { const [x,y] = ponto(i,r);
+    return `<text x="${x}" y="${+y + dy}" text-anchor="middle" font-size="${tam}" fill="${cor}" stroke-width="${borda}">${t}</text>`; };
+  const resumo = ATRIBUTOS.map(([k,n]) => `${n} ${p.atributos[k]}`).join(', ');
+  return `<svg class="radar" viewBox="0 0 520 520" role="img" aria-label="Atributos: ${resumo}">
+    <circle cx="260" cy="260" r="252" fill="none" stroke="#f7f7f2" stroke-width="4"/>
+    <circle cx="260" cy="260" r="243" fill="none" stroke="#0a4dff" stroke-width="12" stroke-dasharray="3 12"/>
+    <circle cx="260" cy="260" r="235" fill="#000" stroke="#f7f7f2" stroke-width="2"/>
+    <polygon points="${hex(115)}" fill="#25252f" stroke="#f7f7f2" stroke-width="3"/>
+    ${ATRIBUTOS.map((_,i) => `<line x1="260" y1="260" x2="${ponto(i,115)[0]}" y2="${ponto(i,115)[1]}" stroke="#77778a"/>`).join('')}
+    <polygon points="${hex(i => 1.15 * p.atributos[ATRIBUTOS[i][0]])}" fill="#0a4dff" fill-opacity=".8" stroke="#3fd0ff" stroke-width="4" stroke-linejoin="round"/>
+    ${ATRIBUTOS.map(([k,nome],i) => { const v = p.atributos[k];
+      return texto(i,178,-14,nome.toUpperCase(),24,'#f7f7f2',7) + texto(i,178,30,notaDe(v),52,'#3fd0ff',10) + texto(i,Math.max(24, 1.15*v - 22),7,v,21,'#f7f7f2',5); }).join('')}
+  </svg>`;
+}
+
 function desenharFicha(p){
-  const info = [{nome:'Posição',valor:p.posicao},{nome:'Número',valor:p.numero},{nome:'Time',valor:p.time},...p.extras].filter(i => i.valor);
+  const info = [{nome:'Posição',valor:p.posicao},{nome:'Subclasse',valor:p.subclasse},{nome:'Número',valor:p.numero},...p.extras].filter(i => i.valor);
+  const over = overDe(p);
+  const hab = (h, n) => `<span class="n">${n}</span><b>${esc(h.nome)}</b><p class="pre">${esc(h.desc)}</p>`;
   $('#app').innerHTML = `<div class="barra">
       <button class="btn" data-acao="aba" data-v="personagens">◀ Voltar</button>
       <button class="btn azul" data-acao="personagem" data-v="${esc(p.id)}">✎ Editar</button>
       <button class="btn preto" data-acao="excluir" data-v="${esc(p.id)}">Excluir</button></div>
-    <div class="ficha">${retrato(p)}<div>
+    <div class="ficha"><div>${retrato(p)}
+      <div class="over"><small>TOTAL</small><b>${over}</b><em>${notaDe(over)}</em></div></div><div>
       <h1 class="nome" aria-label="${esc(p.nome)}">${recortar(p.nome)}</h1>
       ${p.apelido ? `<p class="apelido">“${esc(p.apelido)}”</p>` : ''}
       ${info.length ? `<section class="painel"><dl class="dados">${info.map(i => `<dt>${esc(i.nome)}</dt><dd>${esc(i.valor)}</dd>`).join('')}</dl></section>` : ''}
-      ${p.descricao ? `<section class="painel"><h2>História</h2><p class="pre">${esc(p.descricao)}</p></section>` : ''}
-      ${p.atributos.length ? `<section class="painel"><h2>Atributos</h2>${p.atributos.map(a =>
-        `<div class="attr"><span>${esc(a.nome)}</span><div class="trilho"><i style="width:${limitar(a.valor)}%"></i></div><b>${limitar(a.valor)}</b></div>`).join('')}</section>` : ''}
-      ${p.habilidades.length ? `<section class="painel"><h2>Habilidades</h2>${p.habilidades.map(h =>
-        `<div class="hab"><b>${esc(h.nome)}</b><p class="pre">${esc(h.desc)}</p></div>`).join('')}</section>` : ''}
+      <section class="painel"><h2>Atributos</h2>${grafico(p)}
+        <ul class="escala">${NOTAS.map(([l,min],i) => `<li><b>${l}</b> ${min}–${i ? NOTAS[i-1][1] - 1 : 100}</li>`).join('')}</ul></section>
+      ${p.habilidades.length ? `<section class="painel"><h2>Habilidades</h2>${p.habilidades.map((h,i) =>
+        `<div class="hab">${hab(h, i+1)}${h.variantes.map((v,j) => `<div class="variante">${hab(v, `${i+1}.${j+1}`)}</div>`).join('')}</div>`).join('')}</section>` : ''}
     </div></div>`;
 }
 
@@ -265,15 +388,26 @@ const area = (rotulo, nome, valor) => `<label>${rotulo}<textarea name="${nome}" 
 const botoes = `<div class="acoes"><button type="button" class="btn" data-acao="fechar">Cancelar</button><button class="btn azul">Salvar</button></div>`;
 let aoSalvar = null, fotoNova = '';
 
+const itemHab = h => `<div class="item"><span class="n"></span><input data-k="nome" placeholder="Nome" aria-label="Nome da habilidade" value="${esc(h.nome)}"><button type="button" class="x" data-acao="tirarHab" aria-label="Remover">X</button><textarea data-k="desc" rows="2" placeholder="O que ela faz" aria-label="Descrição">${esc(h.desc)}</textarea></div>`;
 const modelos = {
-  atributos: (a={}) => `<div class="linha at"><input data-k="nome" placeholder="Ex.: Chute" aria-label="Atributo" value="${esc(a.nome)}"><input data-k="valor" type="number" min="0" max="100" aria-label="Valor de 0 a 100" value="${esc(a.valor ?? 50)}"><button type="button" class="x" data-acao="tirar" aria-label="Remover">X</button></div>`,
-  habilidades: (h={}) => `<div class="linha hb"><input data-k="nome" placeholder="Nome da habilidade" aria-label="Habilidade" value="${esc(h.nome)}"><textarea data-k="desc" rows="2" placeholder="O que ela faz" aria-label="Descrição">${esc(h.desc)}</textarea><button type="button" class="x" data-acao="tirar" aria-label="Remover">X</button></div>`,
+  habilidades: (h={}) => `<div class="bloco">${itemHab(h)}<div class="variantes">${(h.variantes || []).map(modelos.variante).join('')}</div><button type="button" class="btn mini" data-acao="variante">+ Variante</button></div>`,
+  variante: (v={}) => itemHab(v),
   extras: (e={}) => `<div class="linha ex"><input data-k="nome" placeholder="Ex.: Altura" aria-label="Nome do campo" value="${esc(e.nome)}"><input data-k="valor" placeholder="Ex.: 1,75 m" aria-label="Valor" value="${esc(e.valor)}"><button type="button" class="x" data-acao="tirar" aria-label="Remover">X</button></div>`
 };
 const grupo = (titulo, tipo, itens) => `<fieldset><legend>${titulo}</legend><div id="g-${tipo}">${itens.map(modelos[tipo]).join('')}</div><button type="button" class="btn mini azul" data-acao="mais" data-v="${tipo}">+ Adicionar</button></fieldset>`;
-const lerGrupo = tipo => [...document.querySelectorAll(`#g-${tipo} .linha`)]
-  .map(l => Object.fromEntries([...l.querySelectorAll('[data-k]')].map(i => [i.dataset.k, i.value.trim()])))
-  .filter(o => o.nome);
+const lerCampos = el => Object.fromEntries([...el.querySelectorAll(':scope > [data-k]')].map(i => [i.dataset.k, i.value.trim()]));
+const lerExtras = () => [...document.querySelectorAll('#g-extras .linha')].map(lerCampos).filter(o => o.nome);
+// Mantém itens que tenham ao menos nome ou descrição
+const preenchido = o => o.nome || o.desc || o.variantes?.length;
+const lerHabilidades = () => [...document.querySelectorAll('#g-habilidades .bloco')].map(b => ({
+  ...lerCampos(b.querySelector(':scope > .item')),
+  variantes: [...b.querySelectorAll('.variantes .item')].map(lerCampos).filter(preenchido)
+})).filter(preenchido);
+
+function previa(){
+  const p = {atributos: Object.fromEntries(ATRIBUTOS.map(([k]) => [k, limitar($(`#form [name=${k}]`).value)]))};
+  $('#previa').textContent = `Total: ${overDe(p)} · Nota ${notaDe(overDe(p))}`;
+}
 
 function abrir(html, funcao, rotulo = 'Salvar'){
   $('#form').innerHTML = html + botoes;
@@ -285,30 +419,33 @@ function abrir(html, funcao, rotulo = 'Salvar'){
 
 function editarPersonagem(id){
   const p = dados.personagens.find(x => x.id === id) ||
-    {nome:'',apelido:'',posicao:'',numero:'',time:'',foto:'',descricao:'',extras:[],habilidades:[],
-     atributos:['Velocidade','Chute','Passe','Drible','Defesa'].map(nome => ({nome,valor:50}))};
+    {nome:'',apelido:'',posicao:'',subclasse:'',numero:'',foto:'',extras:[],habilidades:[],
+     atributos:Object.fromEntries(ATRIBUTOS.map(([k]) => [k, 50]))};
   fotoNova = p.foto;
   abrir(`<h2>${id ? 'Editar' : 'Novo'} personagem</h2>
     <div class="duas">${campo('Nome','nome',p.nome,'required')}${campo('Apelido','apelido',p.apelido)}
-    ${campo('Posição','posicao',p.posicao,'list="posicoes"')}${campo('Número','numero',p.numero,'maxlength="3" inputmode="numeric"')}</div>
+    ${campo('Posição','posicao',p.posicao,'list="posicoes"')}${campo('Subclasse','subclasse',p.subclasse)}
+    ${campo('Número','numero',p.numero,'maxlength="3" inputmode="numeric"')}</div>
     <datalist id="posicoes">${POSICOES.map(x => `<option value="${x}">`).join('')}</datalist>
-    ${campo('Time','time',p.time)}
     <label>Foto<input type="file" id="foto" accept="image/*"></label>
     <p id="status" aria-live="polite"></p>
     <p style="margin-bottom:16px"><button type="button" class="btn mini" data-acao="semFoto">Remover foto</button></p>
-    ${area('História / descrição','descricao',p.descricao)}
-    ${grupo('Atributos (0 a 100)','atributos',p.atributos)}
+    <fieldset><legend>Atributos (0 a 100)</legend><div class="seis">${ATRIBUTOS.map(([k,nome]) =>
+      campo(nome, k, p.atributos[k], 'type="number" min="0" max="100" step="1" required')).join('')}</div>
+      <p id="previa" aria-live="polite"></p></fieldset>
     ${grupo('Habilidades','habilidades',p.habilidades)}
     ${grupo('Outras informações','extras',p.extras)}`,
   f => {
     const novo = {id: id || novoId(), foto: fotoNova};
-    ['nome','apelido','posicao','numero','time','descricao'].forEach(k => novo[k] = f.get(k).trim());
-    ['atributos','habilidades','extras'].forEach(k => novo[k] = lerGrupo(k));
-    novo.atributos.forEach(a => a.valor = limitar(a.valor));
+    ['nome','apelido','posicao','subclasse','numero'].forEach(k => novo[k] = f.get(k).trim());
+    novo.atributos = Object.fromEntries(ATRIBUTOS.map(([k]) => [k, limitar(f.get(k))]));
+    novo.habilidades = lerHabilidades();
+    novo.extras = lerExtras();
     const i = dados.personagens.findIndex(x => x.id === novo.id);
     i < 0 ? dados.personagens.push(novo) : dados.personagens[i] = novo;
     tela = {aba:'personagens', id:novo.id};
   });
+  previa();
 }
 
 function editarPagina(id){
@@ -334,6 +471,12 @@ const acoes = {
     dados.paginas = dados.paginas.filter(p => p.id !== v); salvar(); desenhar(); },
   mais: v => $(`#g-${v}`).insertAdjacentHTML('beforeend', modelos[v]()),
   tirar: (v, el) => el.closest('.linha').remove(),
+  variante: (v, el) => el.previousElementSibling.insertAdjacentHTML('beforeend', modelos.variante()),
+  tirarHab: (v, el) => { // remover a habilidade principal leva as variantes junto
+    const item = el.closest('.item'), principal = item.parentElement.classList.contains('bloco');
+    if (principal && item.parentElement.querySelector('.variantes .item') && !confirm('Remover a habilidade e todas as variantes dela?')) return;
+    (principal ? item.parentElement : item).remove();
+  },
   semFoto: () => { fotoNova = ''; $('#foto').value = ''; $('#status').textContent = 'A foto será removida ao salvar.'; },
   fechar: () => $('#editor').close()
 };
@@ -343,6 +486,7 @@ document.addEventListener('click', e => {
   if (el) acoes[el.dataset.acao](el.dataset.v, el);
 });
 document.addEventListener('input', e => {
+  if (ATRIBUTOS.some(([k]) => e.target.name === k)) previa();
   if (e.target.id === 'busca') { busca = e.target.value; desenharGrade(); }
 });
 
@@ -465,7 +609,7 @@ $('#arquivo').onchange = async e => {
   try {
     const d = JSON.parse(await arq.text());
     if (!Array.isArray(d.personagens) || !Array.isArray(d.paginas)) throw 0;
-    d.personagens.forEach(p => ['atributos','habilidades','extras'].forEach(k => p[k] = p[k] || []));
+    converter(d);
     if (!confirm('Substituir a wiki atual por este backup?')) return;
     dados = d; tela = {aba:'personagens', id:null}; salvar(); desenhar();
   } catch (err) { alert('Esse arquivo não é um backup válido da wiki.'); }
